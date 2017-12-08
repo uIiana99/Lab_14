@@ -30,12 +30,12 @@ void run() {
     }
 
     //  CHECK TIME
-    if (timeFlag) {
-        if (!g.wait_for(std::chrono::seconds(timeFlag))) {
-            g.terminate();
-            throw std::runtime_error("ERROR\tOUT OF TIME");
-        }
-    }
+    // if (timeFlag) {
+    //     if (!g.wait_for(std::chrono::seconds(timeFlag))) {
+    //         g.terminate();
+    //         throw std::runtime_error("ERROR\tOUT OF TIME");
+    //     }
+    // }
 
     //  MAKE
     c_1.wait();
