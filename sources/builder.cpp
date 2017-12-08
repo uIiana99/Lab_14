@@ -22,12 +22,14 @@ void run() {
     if (timeFlag == 0) {
             c_1.wait();
     } else {
-        if (!c_1.wait_for(std::chrono::seconds(timeFlag)))
+        if (!c_1.wait_for(std::chrono::seconds(timeFlag))) {
             c_1.terminate();
+            throw std::runtime_error("ERROR:\tOUT OF TIME");
+        }
     }
 
-    if (!c_1.exit_code())
-        throw std::runtime_error("ERROR\tMAKE");
+    if (c_1.exit_code())
+        throw std::runtime_error("ERROR:\tMAKE");
 
     //  BUILD
     command = "cmake --build _build";
@@ -35,12 +37,14 @@ void run() {
     if (timeFlag == 0) {
         c_2.wait();
     } else {
-        if (!c_2.wait_for(std::chrono::seconds(timeFlag)))
+        if (!c_2.wait_for(std::chrono::seconds(timeFlag))) {
             c_2.terminate();
+            throw std::runtime_error("ERROR:\tOUT OF TIME");
+        }
     }
-        
+
     if (c_2.exit_code())
-        throw std::runtime_error("ERROR\tBUILD");
+        throw std::runtime_error("ERROR:\tBUILD");
 
     //  FLAG
     if (flag.size()) {
@@ -50,8 +54,10 @@ void run() {
         if (timeFlag == 0) {
             c_3.wait();
         } else {
-            if (!c_3.wait_for(std::chrono::seconds(timeFlag)))
+            if (!c_3.wait_for(std::chrono::seconds(timeFlag))) {
                 c_3.terminate();
+                throw std::runtime_error("ERROR:\tOUT OF TIME");
+            }
         }
 
         if (c_3.exit_code())
