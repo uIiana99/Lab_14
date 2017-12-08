@@ -23,11 +23,11 @@ void run() {
     command = "cmake --build _build";
     bp::child c_2(command, bp::std_out > stdout, g);
     //  FLAG
-    if (flag.size()) {
-        command = "cmake --build _build --target ";
-        command += flag;
-        bp::child c_3(command, bp::std_out > stdout, g);
-    }
+    // if (flag.size()) {
+    //     command = "cmake --build _build --target ";
+    //     command += flag;
+    //     bp::child c_3(command, bp::std_out > stdout, g);
+    // }
 
     //  CHECK TIME
     // if (timeFlag) {
@@ -38,8 +38,6 @@ void run() {
     // }
 
     //  MAKE
-
-    // (timeFlag == 0) ? c_1.wait(); : c_1.wait_for(std::chrono::seconds(timeFlag));
     if (timeFlag == 0) {
         c_1.wait();
     } else {
@@ -51,7 +49,6 @@ void run() {
         throw std::runtime_error("ERROR\tMAKE");
 
     //  BUILD
-
     if (timeFlag == 0) {
         c_2.wait();
     } else {
@@ -64,6 +61,10 @@ void run() {
 
     //  FLAG
     if (flag.size()) {
+        command = "cmake --build _build --target ";
+        command += flag;
+        bp::child c_3(command, bp::std_out > stdout, g);
+        
         if (timeFlag == 0) {
             c_3.wait();
         } else {
