@@ -41,7 +41,7 @@ void run() {
     if (timeFlag == 0) {
         c_1.wait();
     } else {
-        if (!c_1.wait_for(std::chrono::seconds(_time)))
+        if (!c_1.wait_for(std::chrono::seconds(timeFlag)))
             c_1.terminate();
     }
 
@@ -52,7 +52,7 @@ void run() {
     if (timeFlag == 0) {
         c_2.wait();
     } else {
-        if (!c_2.wait_for(std::chrono::seconds(_time)))
+        if (!c_2.wait_for(std::chrono::seconds(timeFlag)))
             c_2.terminate();
     }
 
@@ -68,7 +68,7 @@ void run() {
         if (timeFlag == 0) {
             c_3.wait();
         } else {
-            if (!c_3.wait_for(std::chrono::seconds(_time)))
+            if (!c_3.wait_for(std::chrono::seconds(timeFlag)))
                 c_3.terminate();
         }
 
