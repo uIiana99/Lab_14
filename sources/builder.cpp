@@ -15,7 +15,7 @@ std::string flag;
 void run() {
     bp::group g;
 
-    //   MAKE
+    //  MAKE
     command = "cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=";
     command += build;
     bp::child c_1(command, bp::std_out > stdout, g);
@@ -38,18 +38,39 @@ void run() {
     // }
 
     //  MAKE
-    c_1.wait();
+
+    // (timeFlag == 0) ? c_1.wait(); : c_1.wait_for(std::chrono::seconds(timeFlag));
+    if (timeFlag == 0) {
+        c_1.wait();
+    } else {
+        if (!c_1.wait_for(std::chrono::seconds(_time)))
+            c_1.terminate();
+    }
+
     if (c_1.exit_code())
         throw std::runtime_error("ERROR\tMAKE");
 
     //  BUILD
-    c_2.wait();
+
+    if (timeFlag == 0) {
+        c_2.wait();
+    } else {
+        if (!c_2.wait_for(std::chrono::seconds(_time)))
+            c_2.terminate();
+    }
+
     if (c_2.exit_code())
         throw std::runtime_error("ERROR\tBUILD");
 
     //  FLAG
     if (flag.size()) {
-        c_3.wait();
+        if (timeFlag == 0) {
+            c_3.wait();
+        } else {
+            if (!c_3.wait_for(std::chrono::seconds(_time)))
+                c_3.terminate();
+        }
+
         if (c_3.exit_code())
             throw std::runtime_error("ERROR\tBUILD WITH FLAG");
     }
