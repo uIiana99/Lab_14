@@ -29,52 +29,40 @@ void run() {
     //     bp::child c_3(command, bp::std_out > stdout, g);
     // }
 
-    //  CHECK TIME
-    // if (timeFlag) {
-    //     if (!g.wait_for(std::chrono::seconds(timeFlag))) {
-    //         g.terminate();
-    //         throw std::runtime_error("ERROR\tOUT OF TIME");
-    //     }
-    // }
-
-    //  MAKE
-    if (timeFlag == 0) {
-        c_1.wait();
-    } else {
-        if (!c_1.wait_for(std::chrono::seconds(timeFlag)))
-            c_1.terminate();
+     CHECK TIME
+    if (timeFlag) {
+        if (!g.wait_for(std::chrono::seconds(timeFlag))) {
+            g.terminate();
+            throw std::runtime_error("ERROR\tOUT OF TIME");
+        }
     }
 
+    //  MAKE
+    c_1.wait();
     if (c_1.exit_code())
         throw std::runtime_error("ERROR\tMAKE");
 
     //  BUILD
-    if (timeFlag == 0) {
-        c_2.wait();
-    } else {
-        if (!c_2.wait_for(std::chrono::seconds(timeFlag)))
-            c_2.terminate();
-    }
-
+    c_2.wait();
     if (c_2.exit_code())
         throw std::runtime_error("ERROR\tBUILD");
 
     //  FLAG
-    if (flag.size()) {
-        command = "cmake --build _build --target ";
-        command += flag;
-        bp::child c_3(command, bp::std_out > stdout, g);
-        
-        if (timeFlag == 0) {
-            c_3.wait();
-        } else {
-            if (!c_3.wait_for(std::chrono::seconds(timeFlag)))
-                c_3.terminate();
-        }
+    // if (flag.size()) {
+    //     command = "cmake --build _build --target ";
+    //     command += flag;
+    //     bp::child c_3(command, bp::std_out > stdout, g);
 
-        if (c_3.exit_code())
-            throw std::runtime_error("ERROR\tBUILD WITH FLAG");
-    }
+    //     if (timeFlag == 0) {
+    //         c_3.wait();
+    //     } else {
+    //         if (!c_3.wait_for(std::chrono::seconds(timeFlag)))
+    //             c_3.terminate();
+    //     }
+
+    //     if (c_3.exit_code())
+    //         throw std::runtime_error("ERROR\tBUILD WITH FLAG");
+    // }
 }
 
 int main(int argc, char const *argv[]) {
