@@ -1,0 +1,12 @@
+language: cpp
+
+cache:
+  directories:
+  - "$HOME/.hunter"
+
+script:   
+- cmake -H. -B_build
+- cmake --build _build
+- mv _build/builder ./
+- ./builder
+- ./builder --timeout 500
