@@ -29,7 +29,7 @@ void run() {
     //     bp::child c_3(command, bp::std_out > stdout, g);
     // }
 
-     CHECK TIME
+    // CHECK TIME
     if (timeFlag) {
         if (!g.wait_for(std::chrono::seconds(timeFlag))) {
             g.terminate();
