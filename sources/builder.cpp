@@ -15,7 +15,7 @@ std::string flag;
 void run() {
     bp::group g;
 
-    //  MAKE
+    //   MAKE
     command = "cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=";
     command += build;
     bp::child c_1(command, bp::std_out > stdout, g);
