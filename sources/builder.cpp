@@ -26,7 +26,7 @@ void run() {
             c_1.terminate();
     }
 
-    if (c_1.exit_code())
+    if (!c_1.exit_code())
         throw std::runtime_error("ERROR\tMAKE");
 
     //  BUILD
