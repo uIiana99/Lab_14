@@ -7,7 +7,7 @@ namespace bp = boost::process;
 namespace po = boost::program_options;
 
 //  Определяем глобальные переменные
-int time = 0;
+int timeFlag = 0;
 std::string command;
 std::string build = "Debug";
 std::string flag;
@@ -30,8 +30,8 @@ void run() {
     }
 
     //  CHECK TIME
-    if (time) {
-        if (!g.wait_for(std::chrono::seconds(time))) {
+    if (timeFlag) {
+        if (!g.wait_for(std::chrono::seconds(timeFlag))) {
             g.terminate();
             throw std::runtime_error("ERROR\tOUT OF TIME");
         }
@@ -81,7 +81,7 @@ int main(int argc, char const *argv[]) {
             flag = "pack";
             run();
         } else if (vm.count("timeout")) {
-            time = vm["timeout"].as<int>();
+            timeFlag = vm["timeout"].as<int>();
             run();
         } else {
             run();
